@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/accounts/register.css' %}" />
+{% endblock css %}
+
+
 {% block content %}
-    <div >
-        <form method="POST">
+    <div class="excess">
+        <h1>Register Here</h1>
+        <div class="container">
+            <form method="POST" class="w-50 mx-auto">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-success">Register</button>
-        </form>
+            <button type="submit" class="registerbtn">Register</button>
+            </form>
+        </div>
+        <div class="container signin w-50">
         <p style="margin-top: 20px;"">Already have an account? Please <a href="/login">Login</a> </p>
+        </div>
     </div>
 {% endblock content %}
