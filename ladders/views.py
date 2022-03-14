@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 
 from .forms import LadderForm
+from .models import Ladder
 
 # Create your views here.
 @login_required
@@ -31,4 +32,8 @@ def upload_view(request):
 
 @login_required
 def gallery_view(request):
-    return render(request,'ladders/gallery.html',{})
+    obj_list=Ladder.objects.all()
+    context={
+        'obj_list':obj_list
+    }
+    return render(request,'ladders/gallery.html',context)
