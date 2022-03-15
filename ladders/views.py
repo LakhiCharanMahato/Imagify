@@ -51,9 +51,10 @@ def gallery_view(request):
 
 @login_required
 def detail_view(request,id=None):
-    gallery_obj=None
-    if id is not None:
-        gallery_obj=Ladder.objects.filter(user_name=request.user).get(id=id)
+    # gallery_obj=None
+    # if id is not None:
+    #     gallery_obj=Ladder.objects.filter(user_name=request.user).get(id=id)
+    gallery_obj=get_object_or_404(Ladder,id=id,user_name=request.user)
     context={
         "obj":gallery_obj
     }
@@ -61,9 +62,25 @@ def detail_view(request,id=None):
 
 
 @login_required
-def update_view(request):
-    context={}
-    return render(request,'ladders/detail.html',context)
+def update_view(request,id=None):
+    obj= get_object_or_404(Ladder,id=id,user_name=request.user)
+    form=LadderForm(request.POST or None,instance=obj)
+    # if request.method =='POST':
+    #     form=LadderForm(request.POST,request.FILES)
+    #     if form.is_valid():
+    #         form.save()
+    #         context['message']='Data saved.'
+    #         # return redirect('/gallery/')
+    # else:
+    #     form=LadderForm()
+    context={
+        'form':form,
+        "object":obj
+    }
+    if form.is_valid():
+        form.save()
+        context['message']='Data saved.'
+    return render(request,'ladders/upload.html',context)
 
 # @login_required
 # def search_view(request):

@@ -27,11 +27,13 @@ from accounts.views import (
 from ladders.views import (
     upload_view,
     gallery_view,
-    detail_view
+    detail_view,
+    update_view
 )
 urlpatterns = [
     path('',home_view),
     path('gallery/<int:id>/',detail_view),
+    path('gallery/<int:id>/edit/',update_view),
     path('admin/', admin.site.urls),
     path('login/',login_view),
     path('logout/',logout_view),

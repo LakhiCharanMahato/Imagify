@@ -18,8 +18,9 @@ class Ladder(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self,username=None,*args,**kwargs):
-        self.content_type=self.file.file.content_type
+    def save(self,*args,**kwargs):
+        if self.content_type is None:
+            self.content_type=self.file.file.content_type
         # self.user_name=username
         if(self.content_type == 'video/mp4'):
             self.thumbnail=None#FFmpeg.convert(self,input_file=self.file,output_file='imaged.png')
