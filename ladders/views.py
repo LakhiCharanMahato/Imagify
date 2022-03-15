@@ -11,7 +11,9 @@ def upload_view(request):
     if request.method =='POST':
         form=LadderForm(request.POST,request.FILES)
         if form.is_valid():
-            form.save()
+            instance=form.save(commit=False)
+            instance.user_name = request.user
+            instance.save()
             return redirect('/gallery/')
     else:
         form=LadderForm()
@@ -32,7 +34,7 @@ def upload_view(request):
 
 @login_required
 def gallery_view(request):
-    obj_list=Ladder.objects.all()
+    obj_list=Ladder.objects.filter(user_name=request.user)
     context={
         'obj_list':obj_list
     }
