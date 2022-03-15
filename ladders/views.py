@@ -63,7 +63,9 @@ def detail_view(request,id=None):
 
 @login_required
 def update_view(request,id=None):
-    obj= get_object_or_404(Ladder,id=id,user_name=request.user)
+    # print(id,type(id),"Lakhi")
+    obj= get_object_or_404(Ladder, id=id, user_name=request.user)
+    print(len(request.FILES))
     form=LadderForm(request.POST or None,instance=obj)
     # if request.method =='POST':
     #     form=LadderForm(request.POST,request.FILES)
@@ -80,7 +82,12 @@ def update_view(request,id=None):
         "object":obj
     }
     if form.is_valid():
-        form.save()
+        if len(request.FILES)>0:
+            instance=form.save(commit=False)
+            instance.file=request.FILES['file']
+            instance.save()
+        else:
+            form.save()
         context['message']='Data saved.'
     return render(request,'ladders/upload.html',context)
 

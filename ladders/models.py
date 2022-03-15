@@ -29,3 +29,7 @@ class Ladder(models.Model):
         else:
             self.thumbnail=None
         super().save(*args,**kwargs)
+
+    def delete(self,*args,**kwargs):
+        self.file.delete()
+        super().delete(*args,**kwargs)
