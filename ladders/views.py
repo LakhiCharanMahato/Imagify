@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 
@@ -34,8 +34,46 @@ def upload_view(request):
 
 @login_required
 def gallery_view(request):
+    # print("Lakhi1",request.method)
+    ################
+    query_dict=request.GET
+    query=query_dict.get('q')
     obj_list=Ladder.objects.filter(user_name=request.user)
+    if query is not None:
+        obj_list=obj_list.filter(description__icontains=query)
+    #####################
+    # else:
+    #     obj_list=Ladder.objects.filter(user_name=request.user)
     context={
         'obj_list':obj_list
     }
     return render(request,'ladders/gallery.html',context)
+
+@login_required
+def detail_view(request,id=None):
+    gallery_obj=None
+    if id is not None:
+        gallery_obj=Ladder.objects.filter(user_name=request.user).get(id=id)
+    context={
+        "obj":gallery_obj
+    }
+    return render(request,'ladders/detail.html',context)
+
+
+@login_required
+def update_view(request):
+    context={}
+    return render(request,'ladders/detail.html',context)
+
+# @login_required
+# def search_view(request):
+#     query_dict=request.GET
+#     query=query_dict.get('q')
+#     obj_list=None
+#     if query is not None:
+#         obj_list=Ladder.objects.get(id=query)
+#     context={
+#         'obj_list':obj_list
+#     }
+#     print("Hii")
+#     return render(request,'ladders/gallery.html',context)
