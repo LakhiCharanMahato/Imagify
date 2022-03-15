@@ -68,11 +68,13 @@ def update_view(request,id=None):
     # if request.method =='POST':
     #     form=LadderForm(request.POST,request.FILES)
     #     if form.is_valid():
-    #         form.save()
+    #         instance=form.save()
+    #         instance.user_name = request.user
+    #         instance.save()
     #         context['message']='Data saved.'
     #         # return redirect('/gallery/')
     # else:
-    #     form=LadderForm()
+    #     form=LadderForm(instance=obj)
     context={
         'form':form,
         "object":obj

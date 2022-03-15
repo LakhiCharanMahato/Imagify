@@ -19,7 +19,9 @@ class Ladder(models.Model):
         return self.title
 
     def save(self,*args,**kwargs):
-        if self.content_type is None:
+        if self.content_type:
+            pass
+        else:
             self.content_type=self.file.file.content_type
         # self.user_name=username
         if(self.content_type == 'video/mp4'):
