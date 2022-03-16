@@ -1,19 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ladders/upload.css' %}" />
+{% endblock css %}
 
 {% block content %}
-    <h2>Upload</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <!-- <input type="file" name="document"> -->
-        <button type="submit">Upload File</button>
-        {% if message %}
-        <p>{{message}}</p>
-        {% endif %}
-        
-    </form>
-
-    <!-- {% if url %}
-        <p>Uploaded file: <a href="{{url}}">{{url}}</a></p>
-    {% endif %} -->
+<div class="excess">
+    <h1>Upload</h1>
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data" class="w-50 mx-auto">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <!-- <input type="file" name="document"> -->
+            <button type="submit" class="uploadbtn">Upload File</button>
+            {% if message %}
+            <p>{{message}}</p>
+            {% endif %}
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById('id_file').classList.add("form-control")
+</script>
 {% endblock content %}
