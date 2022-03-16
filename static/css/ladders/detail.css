@@ -10,6 +10,29 @@
   background: #f1f1f1;
 }
 
+/* .containerimg {
+  position: relative;
+  width: 100%;
+} */
+/* 
+.containerimg img {
+  width: 100%;
+  height: auto;
+} */
+
+/* 
+.containerimg .btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
+
+.containerimg .btn:hover {
+  background-color: black;
+}
+
+
 /* Header/Blog Title */
 .header {
   padding: 30px;
