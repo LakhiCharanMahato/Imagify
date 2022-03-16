@@ -72,7 +72,7 @@
 
                 </svg>
                 {% else %}
-                <video class="bd-placeholder-img card-img-top" width="100%" height="225" controls>
+                <video class="bd-placeholder-img card-img-top" width="100%" height="225" poster="{{obj.get_thumbnail}}" controls>
                   <source src="{{obj.file.url}}" type="video/mp4">
                 </video>
                 {% endif %}
