@@ -63,15 +63,19 @@
             {% for obj in obj_list %}
             <div class="col card-group">
             <div class="card shadow-sm">
+              {% if obj.content_type == "image/jpeg" or obj.content_type == "image/png" %}
               <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
                   <title>Placeholder</title>
                   <!-- <rect width="100%" height="100%" fill="#55595c"/> -->
                   <!-- <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text> -->
-                  {% if obj.content_type == "image/jpeg" or obj.content_type == "image/png" %}
                   <image src="" alt="Girl in a jacket" width="100%" height="100%"  xlink:href="{{obj.file.url}}" >
-                  {% else %}
-                  {% endif %}
+
                 </svg>
+                {% else %}
+                <video class="bd-placeholder-img card-img-top" width="100%" height="225" controls>
+                  <source src="{{obj.file.url}}" type="video/mp4">
+                </video>
+                {% endif %}
               <div class="card-body">
                 <h5 class="card-title">{{obj.title}}</h5>
                 <p class="card-text">{{obj.description}}</p>
