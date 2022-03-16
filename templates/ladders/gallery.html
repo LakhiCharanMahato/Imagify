@@ -48,18 +48,20 @@
               </div>
             </form>
           </div>
+          <div id="searchformopp" style="display: block;">
+          </div>
         </div>
       </div>
     </div>
   </section>
 
 
-<div class="album py-5 bg-light">
+<div class="album py-5 bg-light ">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         
             {% for obj in obj_list %}
-            <div class="col">
+            <div class="col card-group">
             <div class="card shadow-sm">
               <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
                   <title>Placeholder</title>
@@ -71,18 +73,19 @@
                   {% endif %}
                 </svg>
               <div class="card-body">
+                <h5 class="card-title">{{obj.title}}</h5>
                 <p class="card-text">{{obj.description}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <a href="/gallery/{{obj.id}}/">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    </a>
-                    <a href="/gallery/{{obj.id}}/edit/">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </a>
-                  </div>
-                  <small class="text-muted">{{obj.created_at}}</small>
+              </div>
+              <div class="d-flex justify-content-between align-items-center card-footer">
+                <div class="btn-group">
+                  <a href="/gallery/{{obj.id}}/">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                  </a>
+                  <a href="/gallery/{{obj.id}}/edit/">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </a>
                 </div>
+                <small class="text-muted">{{obj.created_at}}</small>
               </div>
             </div>
           </div>
@@ -93,17 +96,21 @@
 
 <script>
   var x=false
+  document.getElementById('searchformopp').style.height="38px"
   console.log(x)
   function show_search(){
     if (x==true){
       x=false
       document.getElementById('search').innerHTML="Search"
       document.getElementById('searchform').style.display="none"
+      document.getElementById('searchformopp').style.display="block"
     }
     else{
       x=true
       document.getElementById('search').innerHTML="Hide"
       document.getElementById('searchform').style.display="block"
+      document.getElementById('searchformopp').style.display="none"
+      // console.log(document.getElementById('searchform').style.height)
     }
     console.log(x)
   }

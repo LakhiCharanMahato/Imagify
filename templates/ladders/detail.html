@@ -1,7 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ladders/detail.css' %}" />
+{% endblock css %}
+
 {% block content %}
-<h1>{{obj.title}}</h1>
-<p>{{obj.description}}</p>
-<img src="{{obj.file.url}}" alt="Girl in a jacket" width="500" height="100%">
+<div class="bodyrem">
+    <div class="header">
+        <h1>Hello {{obj.user_name}}</h1>
+    </div>
+    <div class="row">
+        <div class="leftcolumn">
+            <div class="card">
+                <h2>{{obj.title}}</h2>
+                <p>{{obj.created_at}}</p>
+                <hr>
+                <p><b>Description: </b>{{obj.description}}</p>
+                <div class="fakeimg d-flex justify-content-center" >
+                    <img src="{{obj.file.url}}" alt="Girl in a jacket" width="100%" height="100%">
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
