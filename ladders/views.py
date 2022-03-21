@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
+from django.core.paginator import Paginator
 
 from .forms import LadderForm
 from .models import Ladder
@@ -41,11 +42,44 @@ def gallery_view(request):
     obj_list=Ladder.objects.filter(user_name=request.user)
     if query is not None:
         obj_list=obj_list.filter(description__icontains=query)
+    countobj=obj_list.count()
     #####################
     # else:
     #     obj_list=Ladder.objects.filter(user_name=request.user)
+    items_per_page=2
+    obj_list_page=[]
+    pagescount=countobj//items_per_page
+    for i in range(pagescount):
+        var1=i*items_per_page
+        var2=(i+1)*items_per_page
+        obj_list_page.append(obj_list[var1:var2])
+
+    print(obj_list_page,countobj,pagescount)
+
+
+    paginator = Paginator(obj_list, 1) # Show 25 contacts per page.
+
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    print("Lakhi",page_obj.number,paginator.count)
+
+    
+    if paginator.count > 5:
+        empty_list_page=list(range(1,6))
+    else:
+        empty_list_page=list(range(1,paginator.count+1))
+
+
+
+    coun=paginator.count
     context={
-        'obj_list':obj_list
+        'obj_list':obj_list,
+        'countobj':countobj,
+        'obj_list_page':obj_list_page,
+        'coun':coun,
+        'page_obj':page_obj,
+        'empty_list_page':empty_list_page
     }
     return render(request,'ladders/gallery.html',context)
 

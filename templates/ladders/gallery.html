@@ -60,7 +60,7 @@
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         
-            {% for obj in obj_list %}
+            {% for obj in page_obj %}
             <div class="col card-group">
             <div class="card shadow-sm">
               {% if obj.content_type == "image/jpeg" or obj.content_type == "image/png" %}
@@ -98,9 +98,56 @@
     </div>
 </div>
 
+<div class="d-flex justify-content-center" style="margin-bottom: 30px;margin-top: 20px;">
+<nav aria-label="...">
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <!-- <span class="page-link">Previous</span> -->
+      <a class="page-link" href="?page={{ page_obj.previous_page_number}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% else%}
+    <li class="page-item disabled">
+      <!-- <span class="page-link">Previous</span> -->
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% endif %}
+
+    {% for i in empty_list_page %}
+    
+    
+    <li class="page-item {% if i == page_obj.number%} active {% endif%}" id="pt{{i}}">
+      <!-- <span class="page-link" id="page{{i}}"></span> -->
+      <a class="page-link" href="?page={{i}}" id="page{{i}}"></a>
+    </li>    
+    {% endfor %}
+
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>    
+    {% endif %}
+  </ul>
+</nav>
+</div>
+
 <script>
   var x=false
-  document.getElementById('searchformopp').style.height="38px"
+  var pgnum=1
+  document.getElementById('searchformopp').style.height="36px"
   console.log(x)
   function show_search(){
     if (x==true){
@@ -118,5 +165,58 @@
     }
     console.log(x)
   }
+  function mypagefunc(num){
+    pgnum=num
+    console.log(pgnum)
+  }
+  function pg(){
+    return 0
+  }
+
+  var m="{{ page_obj.number}}"
+  var countpage=parseInt('{{coun}}')
+  // console.log(countpage,m)
+  var iter=countpage > 5 ? 5 : countpage
+  for(j=0;j<iter;j++){
+    var p
+    if(iter<5){
+      p=j+1
+    }
+    else{
+    p=parseInt(m)+j
+    }
+    k=j+1
+    document.getElementById(`page${k}`).innerHTML=p
+    document.getElementById(`page${k}`).href=`?page=${p}`
+  }
+
+  // var element=document.getElementById(`pt${2}`)
+  
+  // element.addEventListener("click",function(){
+  //   console.log("Hello Lakhi")
+  //   this.className += " active"
+  // });
+
+
+
+// // Get all buttons with class="btn" inside the container
+// var btns = document.getElementsByClassName("page-item");
+
+// // Loop through the buttons and add the active class to the current/clicked button
+// for (var i = 0; i < btns.length; i++) {
+//   btns[i].addEventListener("click", function() {
+//     var current = document.getElementsByClassName("active");
+
+//     // If there's no active class
+//     if (current.length > 0) {
+//       current[0].className = current[0].className.replace(" active", "");
+//     }
+
+//     // Add the active class to the current/clicked button
+//     this.className += " active";
+//   });
+// }
+
+
 </script>
 {% endblock content %}
