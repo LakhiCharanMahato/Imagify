@@ -1,7 +1,10 @@
 # from turtle import title
 from django.db import models
 # from pyffmpeg import FFmpeg
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.conf import settings
+
+
 import subprocess
 import os
 
@@ -14,7 +17,7 @@ class Ladder(models.Model):
     thumbnail=models.TextField(null=True)
     content_type=models.TextField()
     created_at=models.DateTimeField(auto_now_add=True)
-    user_name=models.ForeignKey(User,default=None,on_delete=models.CASCADE)
+    user_name=models.ForeignKey(settings.AUTH_USER_MODEL,default=None,on_delete=models.CASCADE)
     # user_name=models.TextField()
 
 
