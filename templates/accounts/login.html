@@ -15,8 +15,26 @@
                 <button type="submit" class="loginbtn">Login</button>
             </form>
         </div>
-        <div class="container register w-50">
-            <p style="margin-top: 20px;"">Need an account? Please <a href="/register">Register</a> </p>
-        </div>
+        <!-- <div class="container register w-50"> -->
+            <!-- <div>
+            <a href="/register"><button type="button" onclick="" class="registerbtn" style="float: left; width: auto; margin: 10px;">Register</button></a>
+            </div>
+            <div>
+            <a href="{% url 'reset_password' %}">Forgot Password</a>
+            </div> -->
+            <!-- <p style="margin-top: 20px;"">Need an account? Please <a href="/register">Register</a> </p> -->
+            <!-- <p style="margin-top: 20px;""><a href="{% url 'reset_password' %}">Forgot Password</a> <a href="/register">Register</a> </p> -->
+        <!-- </div> -->
+        <div class="bottom-container container w-50">
+            <div class="row">
+              <div class="col">
+                <a href="/register" style="color:white" class="btn">Register</a>
+              </div>
+              <!-- <hr> -->
+              <div class="col">
+                <a href="{% url 'reset_password' %}" style="color:white" class="btn">Forgot password?</a>
+              </div>
+            </div>
+          </div>
     </div>
 {% endblock content %}
