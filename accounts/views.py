@@ -86,7 +86,7 @@ def register_view(request):
 
         ################
 
-        return redirect('/login')
+        return redirect('/verification_mail')
 
     context={
         "form":form
@@ -105,6 +105,13 @@ def activate_user(request,uidb64,token):
         user.is_email_verified=True
         user.save()
 
-        return redirect('/login')
+        # return redirect('/login')
+        return redirect('/verification_success')
 
     return render(request,'accounts/activate-failed.html',{"user":user})
+
+def verification_view(request):
+    return render(request,'accounts/verification_mail.html',{})
+
+def verification_success_view(request):
+    return render(request,'accounts/verification_success.html',{})

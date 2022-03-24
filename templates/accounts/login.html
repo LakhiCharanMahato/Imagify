@@ -12,6 +12,10 @@
             <form method="POST" class="w-50 mx-auto">
                 {% csrf_token %}
                 {{ form.as_p }}
+                
+                {% if erroremail %}
+                <p style="display: none;" id="errorline">{{erroremail}}</p>
+                {% endif %}
                 <button type="submit" class="loginbtn">Login</button>
             </form>
         </div>
@@ -37,4 +41,11 @@
             </div>
           </div>
     </div>
+    <script>
+      var err=document.getElementById('errorline').innerHTML
+      console.log(err.length)
+      if (err.length>0){
+        alert(err)
+      }
+    </script>
 {% endblock content %}

@@ -94,3 +94,23 @@
   display: table;
   clear: both;
 }
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  margin: 5px 0;
+  opacity: 0.85;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 20px;
+  /* outline: none !important; */
+  text-decoration: none; /* remove underline from anchors */
+}
+
+.btn:focus{
+  box-shadow: none !important;
+  outline: none !important;
+}
+

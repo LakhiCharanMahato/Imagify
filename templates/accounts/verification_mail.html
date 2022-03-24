@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/accounts/password_reset_sent.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<div class="excess">
+    <h1 style="margin-bottom: 20px;">Verification Email sent</h1>
+    <p>We've sent you a verification mail to the email id, you registered. 
+        Verify your email and then proceed to login.
+    </p>
+
+    <a href="/login"><button type="button" class="homebtn">Login</button></a>
+</div>
+{% endblock content %}

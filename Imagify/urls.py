@@ -24,7 +24,9 @@ from accounts.views import (
     login_view,
     logout_view,
     register_view,
-    activate_user
+    activate_user,
+    verification_view,
+    verification_success_view
 )
 from ladders.views import (
     upload_view,
@@ -56,7 +58,10 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(template_name="accounts/password_reset_done.html"),
         name="password_reset_complete"),
 
-    path('activate-user/<uidb64>/<token>/',activate_user,name='activate')
+    path('activate-user/<uidb64>/<token>/',activate_user,name='activate'),
+
+    path('verification_mail/',verification_view),
+    path('verification_success/',verification_success_view)
 ]
 
 if settings.DEBUG:
