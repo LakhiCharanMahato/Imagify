@@ -26,7 +26,8 @@ from accounts.views import (
     register_view,
     activate_user,
     verification_view,
-    verification_success_view
+    verification_success_view,
+    password_reset_view
 )
 from ladders.views import (
     upload_view,
@@ -45,8 +46,11 @@ urlpatterns = [
     path('upload/',upload_view),
     path('gallery/',gallery_view),
 
+    # path('reset_password/',
+    #     auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"),
+    #     name="reset_password"),
     path('reset_password/',
-        auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"),
+        password_reset_view,
         name="reset_password"),
     path('reset_password_sent/',
         auth_views.PasswordResetDoneView.as_view(template_name="accounts/password_reset_sent.html"),

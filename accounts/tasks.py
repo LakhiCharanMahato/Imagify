@@ -18,6 +18,8 @@ from django.core import mail
 from smtplib import SMTP
 import smtplib,ssl
 import os
+from .models import User
+from django.contrib.auth.forms import PasswordResetForm
 
 
 # from .views import gogo
@@ -82,5 +84,21 @@ def send_verification_emailid(self,email_subject,email_body,from_email,empass,to
         # except BadHeaderError:
         #         print("Nooooo Bad")
         # send_mail("Hello","Ok",settings.EMAIL_HOST_USER,[to])
+
+
+@shared_task
+def send_mail(subject_template_name, email_template_name, context,
+              from_email, to_email, html_email_template_name):
+    context['user'] = User.objects.get(pk=context['user'])
+
+    PasswordResetForm.send_mail(
+        None,
+        subject_template_name,
+        email_template_name,
+        context,
+        from_email,
+        to_email,
+        html_email_template_name
+    )
 
     

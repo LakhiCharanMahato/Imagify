@@ -1,8 +1,10 @@
+import email
+from site import USER_SITE
 import threading
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, PasswordResetForm
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -10,10 +12,12 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str, force_text, DjangoUnicodeDecodeError
 from .utils import generate_token
 from .models import User
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail
 from django.conf import settings
 
 from .tasks import send_verification_emailid
+
+from django.contrib.auth.tokens import default_token_generator
 
 # Create your views here.
 # class EmailThread(threading.Thread):
@@ -138,3 +142,39 @@ def verification_view(request):
 
 def verification_success_view(request):
     return render(request,'accounts/verification_success.html',{})
+
+def password_reset_view(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+
+    form=PasswordResetForm(request.POST or None)
+    if request.method=='POST':
+        if form.is_valid():
+            # form.save(from_email=from_email)
+            data=form.cleaned_data.get("email")
+            user_email=User.objects.filter(email=data)
+            if user_email.exists():
+                user=user_email[0]
+                subject="Password reset request"
+                email_template_name='accounts/password_message.html'
+                parameters={
+                    'email':user.email,
+                    'domain':'127.0.0.1:8000',
+                    'site_name':'Imagify',
+                    'uid':urlsafe_base64_encode((force_bytes(user.pk))),
+                    'token':default_token_generator.make_token(user),
+                    'protocol':'http',
+                    'user':user
+                }
+                email=render_to_string(email_template_name,parameters)
+                try:
+                    from_email=settings.EMAIL_HOST_USER
+                    empass=settings.EMAIL_HOST_PASSWORD
+                    send_verification_emailid.delay(subject,email,from_email,empass,user.email)
+                    # send_mail(subject,email,'',[user.email],fail_silently=False)
+                except:
+                    pass
+            # print(user_email,user_email.exists())
+            # print(data,type(data))
+            return redirect('/reset_password_sent/')
+    return render(request,'accounts/password_reset.html',{'form':form})
