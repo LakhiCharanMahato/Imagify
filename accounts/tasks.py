@@ -81,6 +81,6 @@ def send_verification_emailid(self,email_subject,email_body,from_email,empass,to
         #         )
         # except BadHeaderError:
         #         print("Nooooo Bad")
-        # send_mail("Hello","Ok",settings.EMAIL_HOST_USER,['arya.lakhi@gmail.com'])
+        # send_mail("Hello","Ok",settings.EMAIL_HOST_USER,[to])
 
     
