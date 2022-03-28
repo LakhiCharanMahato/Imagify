@@ -13,14 +13,18 @@ from .models import User
 from django.core.mail import EmailMessage
 from django.conf import settings
 
-# Create your views here.
-class EmailThread(threading.Thread):
-    def __init__(self,email):
-        self.email=email
-        threading.Thread.__init__(self)
+from .tasks import send_verification_emailid
 
-    def run(self):
-        self.email.send()
+# Create your views here.
+# class EmailThread(threading.Thread):
+#     def __init__(self,email):
+#         self.email=email
+#         threading.Thread.__init__(self)
+
+#     def run(self):
+#         self.email.send()
+
+
 
 
 def send_verification_email(user,request):
@@ -33,12 +37,22 @@ def send_verification_email(user,request):
         'token':generate_token.make_token(user)
     })
 
-    email=EmailMessage(subject=email_subject,body=email_body,
-            from_email=settings.EMAIL_HOST_USER,
-            to=[user.email]
-            )
+    # email=EmailMessage(subject=email_subject,body=email_body,
+    #         from_email=settings.EMAIL_HOST_USER,
+    #         to=[user.email]
+    #         )
+    # email.send()
+    # print(settings.EMAIL_HOST_USER,type(settings.EMAIL_HOST_USER))
+    # print(EMAIL_HOST_USER,type(EMAIL_HOST_USER))    
+    from_email=settings.EMAIL_HOST_USER
+    empass=settings.EMAIL_HOST_PASSWORD
 
-    EmailThread(email).start()
+    send_verification_emailid.delay(email_subject,email_body,
+        from_email,empass,to=user.email)
+
+    # return email
+
+#     EmailThread(email).start()
     # email.send()
 
 def login_view(request):
@@ -81,7 +95,16 @@ def register_view(request):
         user_obj=form.save()
 
         #############
+        # print("Lakhi")
+        # print(user_obj)
+        # senddata={
+        #     'user':user_obj.username,
+        #     'pk':user_obj.pk,
+        #     'email':user_obj.email,
+        # }
         send_verification_email(user_obj,request)
+
+        # send_verification_emailid.delay(email,request)
 
 
         ################

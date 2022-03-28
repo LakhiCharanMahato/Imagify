@@ -1,2 +1,7 @@
 django>=3.2,<3.3
 django-dotenv
+celery
+redis
+django-celery-results
+wheel
+django-celery-beat
