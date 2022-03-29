@@ -118,8 +118,6 @@
     {% endif %}
 
     {% for i in empty_list_page %}
-    
-    
     <li class="page-item {% if i == page_obj.number%} active {% endif%}" id="pt{{i}}">
       <!-- <span class="page-link" id="page{{i}}"></span> -->
       <a class="page-link" href="?page={{i}}" id="page{{i}}"></a>

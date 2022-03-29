@@ -57,22 +57,24 @@ def gallery_view(request):
     print(obj_list_page,countobj,pagescount)
 
 
-    paginator = Paginator(obj_list, 1) # Show 25 contacts per page.
+    paginator = Paginator(obj_list, 12) # Show 25 contacts per page.
 
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    print("Lakhi",page_obj.number,paginator.count)
+    print("Lakhi",page_obj.number,paginator.count,paginator)
+    pagescount_total=paginator.count // 12
 
     
-    if paginator.count > 5:
+    if pagescount_total > 5:
         empty_list_page=list(range(1,6))
     else:
-        empty_list_page=list(range(1,paginator.count+1))
+        empty_list_page=list(range(1,pagescount_total+2))
 
 
 
-    coun=paginator.count
+    # coun=paginator.count
+    coun=pagescount_total+1
     context={
         'obj_list':obj_list,
         'countobj':countobj,

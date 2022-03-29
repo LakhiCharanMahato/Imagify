@@ -8,6 +8,9 @@ from django.conf import settings
 import subprocess
 import os
 
+from .tasks import easy_thumbnail
+from celery.result import AsyncResult
+
 # Create your models here.
 class Ladder(models.Model):
     title=models.CharField(max_length=120)
@@ -48,20 +51,42 @@ class Ladder(models.Model):
         #     self.thumbnail=None
         self.thumbnail=None
         super().save(*args,**kwargs)
+
+
         if(self.content_type == 'video/mp4'):
-            # self.thumbnail=None
-            # ff=FFmpeg()
-            print(self.file.url)
-            print(self.id)
-            
-            # self.thumbnail=ff.convert(input_file=self.file,output_file='/media/imaged.png')
-            video_input_path="static/"+self.file.url
-            image_output_path='static/media/imaged'+f'{self.id}'+'.png'
-            subprocess.call(['ffmpeg', '-i',video_input_path, '-ss', '00:00:01.000', '-vframes', '1', image_output_path])
+            data=easy_thumbnail.delay(content_type=self.content_type,
+                file_url=self.file.url,
+                id=self.id
+                )
+            # taskid=data.task_id
+            # res=AsyncResult(taskid)
+            # print("Awesome",res,data)
             self.thumbnail='/media/imaged'+f'{self.id}'+'.png'
         else:
-            self.thumbnail=None        
+            self.thumbnail=None
         super().save(*args,**kwargs)
+        
+
+
+
+
+
+        ##################################################################
+        # if(self.content_type == 'video/mp4'):
+        #     # self.thumbnail=None
+        #     # ff=FFmpeg()
+        #     print(self.file.url)
+        #     print(self.id)
+            
+        #     # self.thumbnail=ff.convert(input_file=self.file,output_file='/media/imaged.png')
+        #     video_input_path="static/"+self.file.url
+        #     image_output_path='static/media/imaged'+f'{self.id}'+'.png'
+        #     subprocess.call(['ffmpeg', '-i',video_input_path, '-ss', '00:00:01.000', '-vframes', '1', image_output_path])
+        #     self.thumbnail='/media/imaged'+f'{self.id}'+'.png'
+        # else:
+        #     self.thumbnail=None        
+        # super().save(*args,**kwargs)
+        ####################################################################
 
       
 
