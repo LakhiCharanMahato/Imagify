@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/accounts/profile.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<!-- <h2 style="text-align:center">User Profile Card</h2> -->
+
+<div class="cardi">
+    <img src="/media/inhouse/courag.jpg" alt="John" style="width:100%;">
+    <div class="info">
+        <h1>{{account.username}}</h1>
+        <p class="title">
+        {% if is_self %}
+        {{account.email}}
+        {% else %}
+            {% if user.hide_email %}
+                *************
+            {% else %}
+                {{account.email}}
+            {% endif %}
+        {% endif %}
+        </p>
+    </div>
+    <!-- <p>Harvard University</p> -->
+    <!-- <br><br><br><br><br><br> -->
+    {% if is_self %}
+    <button class="updbtn">Update</button>
+    {% else %}
+    <button class="updbtn">Add Friend</button>
+    {% endif %}
+  </div>
+
+
+
+{% endblock %}

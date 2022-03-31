@@ -1,6 +1,7 @@
 import email
 from site import USER_SITE
 import threading
+from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -178,3 +179,38 @@ def password_reset_view(request):
             # print(data,type(data))
             return redirect('/reset_password_sent/')
     return render(request,'accounts/password_reset.html',{'form':form})
+
+
+def account_view(request,*args,**kwargs):
+    """
+    - Logic here is kind of tricky 
+        is_self (boolean)
+            is_friend (boolean)
+                -1: NO_REQUEST_SENT
+                0: THEM_SENT_TO_YOU
+                1: YOU_SENT_TO_THEM
+    """
+    context={}
+    user_id=kwargs.get("user_id")
+    try:
+        account=User.objects.get(pk=user_id)
+    except:
+        return HttpResponse("That user doesn't exist")
+
+    if account:
+        context['account']=account
+
+        is_self=True
+        is_friend=False
+        user=request.user
+
+        if user.is_authenticated and user!=account:
+            is_self=False
+        elif not user.is_authenticated:
+            is_self=False
+
+        context['is_self']=is_self
+        context['is_friend']=is_friend
+        # context['BASE_URL']=settings.BASE_URL
+
+        return render(request,"accounts/profile.html",context)

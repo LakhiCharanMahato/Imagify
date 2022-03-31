@@ -27,7 +27,8 @@ from accounts.views import (
     activate_user,
     verification_view,
     verification_success_view,
-    password_reset_view
+    password_reset_view,
+    account_view
 )
 from ladders.views import (
     upload_view,
@@ -65,7 +66,9 @@ urlpatterns = [
     path('activate-user/<uidb64>/<token>/',activate_user,name='activate'),
 
     path('verification_mail/',verification_view),
-    path('verification_success/',verification_success_view)
+    path('verification_success/',verification_success_view),
+
+    path('profile/<user_id>/',account_view,name="profile_view")
 ]
 
 if settings.DEBUG:
