@@ -5,3 +5,4 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     is_email_verified=models.BooleanField(default=False)
     hide_email=models.BooleanField(default=False)
+    profile_pic=models.FileField(upload_to='',blank=True)

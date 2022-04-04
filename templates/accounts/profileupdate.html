@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/accounts/profileupdate.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<div class="excess">
+    <h1>Update account</h1>
+    <div class="container">
+        <form method="post" enctype="multipart/form-data" class="w-50 mx-auto">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="uploadbtn">Update</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById('id_profile_pic').classList.add("form-control")
+
+    document.getElementById('profile_pic-clear_id').style.display='none'
+
+    // document.getElementById('id_hide_email').classList.add("")
+    // org_html=document.getElementById('id_hide_email').innerHTML
+    // new_html="<div class='contain1'>"+ org_html + "</div>"
+    // document.getElementById('id_hide_email').innerHTML=new_html
+</script>
+{% endblock content%}

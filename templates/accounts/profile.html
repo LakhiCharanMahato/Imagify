@@ -9,14 +9,18 @@
 <!-- <h2 style="text-align:center">User Profile Card</h2> -->
 
 <div class="cardi">
+    {% if account.profile_pic %}
+    <img src="{{account.profile_pic.url}}" alt="John" style="width:100%;height:300px;">
+    {% else %}
     <img src="/media/inhouse/courag.jpg" alt="John" style="width:100%;">
+    {% endif %}
     <div class="info">
         <h1>{{account.username}}</h1>
         <p class="title">
         {% if is_self %}
         {{account.email}}
         {% else %}
-            {% if user.hide_email %}
+            {% if account.hide_email %}
                 *************
             {% else %}
                 {{account.email}}
@@ -27,7 +31,7 @@
     <!-- <p>Harvard University</p> -->
     <!-- <br><br><br><br><br><br> -->
     {% if is_self %}
-    <button class="updbtn">Update</button>
+    <a href="/profile/{{request.user.id}}/update"><button class="updbtn">Update</button></a>
     {% else %}
     <button class="updbtn">Add Friend</button>
     {% endif %}

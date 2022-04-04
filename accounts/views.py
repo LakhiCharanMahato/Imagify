@@ -2,10 +2,10 @@ import email
 from site import USER_SITE
 import threading
 from django.http import HttpResponse
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .forms import CustomUserCreationForm, PasswordResetForm
+from .forms import CustomUserCreationForm, PasswordResetForm, ProfileUserUpdateForm
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -214,3 +214,28 @@ def account_view(request,*args,**kwargs):
         # context['BASE_URL']=settings.BASE_URL
 
         return render(request,"accounts/profile.html",context)
+
+
+def update_profile_view(request,*args,**kwargs):
+    obj=get_object_or_404(User, id=request.user.id)
+    form=ProfileUserUpdateForm(request.POST or None,instance=obj)
+    context={
+        'form':form,
+        "object":obj
+    }
+
+    print("OKOK",request.FILES)
+    if form.is_valid():
+        if not request.user.profile_pic:
+            instance=form.save(commit=False)
+            instance.profile_pic=request.FILES['profile_pic']
+            instance.save()
+        else:
+            if len(request.FILES)>0:
+                instance=form.save(commit=False)
+                instance.profile_pic=request.FILES['profile_pic']
+                instance.save()
+            else:
+                form.save()
+        context['message']='Data saved.'
+    return render(request,'accounts/profileupdate.html',context)

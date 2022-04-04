@@ -64,3 +64,9 @@ class PasswordResetForm(PasswordResetFormCore):
     #                     email_template_name=email_template_name,
     #                     context=context, from_email=from_email, to_email=to_email,
     #                     html_email_template_name=html_email_template_name)
+
+
+class ProfileUserUpdateForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=['username','hide_email','profile_pic']
