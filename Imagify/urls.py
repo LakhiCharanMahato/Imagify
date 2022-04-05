@@ -37,6 +37,10 @@ from ladders.views import (
     detail_view,
     update_view
 )
+
+from friends.views import (
+    friends_finder_view
+)
 urlpatterns = [
     path('',home_view),
     path('gallery/<int:id>/',detail_view),
@@ -71,6 +75,8 @@ urlpatterns = [
 
     path('profile/<user_id>/',account_view,name="profile_view"),
     path('profile/<user_id>/update',update_profile_view,name="profile_view"),
+
+    path('friends/people',friends_finder_view)
 ]
 
 if settings.DEBUG:

@@ -226,16 +226,17 @@ def update_profile_view(request,*args,**kwargs):
 
     print("OKOK",request.FILES)
     if form.is_valid():
-        if not request.user.profile_pic:
+        # if request.user.profile_pic:
+        if len(request.FILES)>0:
             instance=form.save(commit=False)
             instance.profile_pic=request.FILES['profile_pic']
             instance.save()
         else:
-            if len(request.FILES)>0:
-                instance=form.save(commit=False)
-                instance.profile_pic=request.FILES['profile_pic']
-                instance.save()
-            else:
-                form.save()
+            form.save()
+        # else:
+        #     instance=form.save(commit=False)
+        #     instance.profile_pic=request.FILES['profile_pic']
+        #     instance.save()
+
         context['message']='Data saved.'
     return render(request,'accounts/profileupdate.html',context)
