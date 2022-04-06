@@ -27,7 +27,9 @@
             <span onclick="this.parentElement.style.display='none'" class="btn btn-danger w3-right" style="margin-top: 15px;">Delete</span>
 
             <!-- <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span> -->
-            <a href="/gallery/"><span class="btn btn-primary active w3-right" style="margin-right: 10px;margin-top: 15px ;">Add Friend</span></a>
+            <a href="?initialreceiver={{item.id}}">
+              <span onclick="" class="btn btn-primary active w3-right" style="margin-right: 10px;margin-top: 15px ;">Add Friend</span>
+            </a>
 
             <a href="#">
               <img src="/media/inhouse/img_avatar2.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
@@ -64,5 +66,9 @@
 
   <script>
     function processClick(e) { e.stopPropagation() }
+
+    function myfunction(item){
+      console.log(item)
+    }
   </script>
 {% endblock content %}
