@@ -21,6 +21,21 @@ class FriendList(models.Model):
     def __str__(self):
         return self.user1.username
 
+    def send_friend_request(user1,user2):
+        entry1=FriendList(user1=user1,user2=user2)
+        entry1.save()
+    
+    def accept_friend_request(user1,user2):
+        entry1=FriendList.objects.filter(user1=user1).filter(user2=user2)[0]
+        entry1.is_active=False
+        entry1.save()
+        entry2=FriendList(user1=user2,user2=user1,is_active=False)
+        entry2.save()
+
+    def delete_friend_request(user1,user2):
+        entry1=FriendList.objects.filter(user1=user1).filter(user2=user2)[0]
+        entry1.delete()
+
 # def add_friend(self,account):
 # """
 # Add a new friend
