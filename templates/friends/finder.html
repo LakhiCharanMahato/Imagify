@@ -10,7 +10,7 @@
 <div class="w3-container">
     <!-- <h2>Avatar List</h2> -->
     <!-- <p>You can combine w3-ul and the w3-bar classes to create an avatar list:</p> -->
-    <ul class="w3-ul w3-card-4">
+    <ul class="w3-ul w3-card-4 w-50 mx-auto">
       <!-- <li class="w3-bar">
         <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
         <img src="/media/inhouse/img_avatar2.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
@@ -21,14 +21,24 @@
       </li> -->
 
       {% for item in obj %}
+      <!-- <a href="#"> -->
+      <!-- <div class="w-50 mx-auto"> -->
         <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
-            <img src="/media/inhouse/img_avatar2.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-            <div class="w3-bar-item">
-            <span class="w3-large">{{item}}</span><br>
-            <span>{% if item.hide_email %}*************{% else %}{{item.email}}{% endif %}</span>
+            <span onclick="this.parentElement.style.display='none'" class="btn btn-danger w3-right" style="margin-top: 15px;">Delete</span>
+
+            <!-- <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span> -->
+            <a href="/gallery/"><span class="btn btn-primary active w3-right" style="margin-right: 10px;margin-top: 15px ;">Add Friend</span></a>
+
+            <a href="#">
+              <img src="/media/inhouse/img_avatar2.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+            </a>
+            <div class="w3-bar-item" onclick="location.href='/profile/{{item.id}}/';" style="cursor: pointer;" >
+              <span class="w3-large">{{item}}</span><br>
+              <span>{% if item.hide_email %}*************{% else %}{{item.email}}{% endif %}</span>
             </div>
         </li>
+      <!-- </div> -->
+      <!-- </a> -->
       {% endfor %}
   
       <!-- <li class="w3-bar">
@@ -51,4 +61,8 @@
 
     </ul>
   </div>
+
+  <script>
+    function processClick(e) { e.stopPropagation() }
+  </script>
 {% endblock content %}
