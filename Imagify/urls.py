@@ -39,7 +39,8 @@ from ladders.views import (
 )
 
 from friends.views import (
-    friends_finder_view
+    friends_finder_view,
+    friend_request_received_view
 )
 urlpatterns = [
     path('',home_view),
@@ -76,7 +77,8 @@ urlpatterns = [
     path('profile/<user_id>/',account_view,name="profile_view"),
     path('profile/<user_id>/update',update_profile_view,name="profile_view"),
 
-    path('friends/people',friends_finder_view)
+    path('friends/people',friends_finder_view),
+    path('friends/requests',friend_request_received_view)
 ]
 
 if settings.DEBUG:
