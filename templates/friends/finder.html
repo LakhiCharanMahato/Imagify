@@ -24,14 +24,18 @@
       <!-- <a href="#"> -->
       <!-- <div class="w-50 mx-auto"> -->
         <li class="w3-bar">
-            <span onclick="this.parentElement.style.display='none'" class="btn btn-danger w3-right" style="margin-top: 15px;">Delete</span>
+            {% if item.id in FriendRequestList %}
+              <span onclick="" class="btn btn-light w3-right" style="margin-top: 15px;">Friend Request sent</span>
+            {% else %}
+              <span onclick="this.parentElement.style.display='none'" class="btn btn-danger w3-right" style="margin-top: 15px;">Delete</span>
 
-            <!-- <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span> -->
-            <a href="?initialreceiver={{item.id}}">
-              <span onclick="" class="btn btn-primary active w3-right" style="margin-right: 10px;margin-top: 15px ;">Add Friend</span>
-            </a>
+              <!-- <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span> -->
+              <a href="?initialreceiver={{item.id}}">
+                <span onclick="" class="btn btn-primary active w3-right" style="margin-right: 10px;margin-top: 15px ;">Add Friend</span>
+              </a>
+            {% endif %}
 
-            <a href="#">
+            <a href="/profile/{{item.id}}/">
               <img src="/media/inhouse/img_avatar2.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
             </a>
             <div class="w3-bar-item" onclick="location.href='/profile/{{item.id}}/';" style="cursor: pointer;" >
