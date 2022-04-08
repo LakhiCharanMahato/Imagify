@@ -22,8 +22,11 @@
 
                   {% if request.user.is_authenticated %}
                   <a class="nav-link active" aria-current="page" href="/profile/{{request.user.id}}/">Profile</a>
+                  <a class="nav-link active" aria-current="page" href="/friends/all">My Friends</a>
+
                   <a class="nav-link active" aria-current="page" href="/friends/people">Find Friends</a>
                   <a class="nav-link active" aria-current="page" href="/friends/requests">Friend Requests</a>
+
 
                   <a class="nav-link active" aria-current="page" href="/upload/">Upload</a>
                   <a class="nav-link active" aria-current="page" href="/gallery/">Gallery</a>

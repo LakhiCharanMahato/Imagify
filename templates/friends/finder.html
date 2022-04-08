@@ -21,6 +21,9 @@
           <span>Web Designer</span>
         </div>
       </li> -->
+      {% if obj|length == 0 %}
+         <p style="font-style: italic;text-align: center;">Nothing to show.</p>
+      {% endif %}
 
       {% for item in obj %}
       <!-- <a href="#"> -->

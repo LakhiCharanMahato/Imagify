@@ -77,3 +77,16 @@ def friend_request_received_view(request):
     }
     return render(request,'friends/allrequests.html',context)
 
+
+def my_friends_all_view(request):
+    current_user=request.user
+    obj1=FriendList.objects.filter(user1=current_user).filter(is_active=False).values_list('user2',flat=True)
+    obj1=set(obj1)
+
+    obj=[]
+    for i in obj1:
+        obj.append(User.objects.get(id=i))
+    context={
+        'obj':obj
+    }
+    return render(request,'friends/allfriends.html',context)
