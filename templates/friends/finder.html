@@ -10,7 +10,9 @@
 <div class="w3-container">
     <!-- <h2>Avatar List</h2> -->
     <!-- <p>You can combine w3-ul and the w3-bar classes to create an avatar list:</p> -->
-    <ul class="w3-ul w3-card-4 w-50 mx-auto">
+    <!-- <ul class="w3-ul w3-card-4 w-50 mx-auto"> -->
+
+
       <!-- <li class="w3-bar">
         <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
         <img src="/media/inhouse/img_avatar2.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
@@ -23,6 +25,8 @@
       {% for item in obj %}
       <!-- <a href="#"> -->
       <!-- <div class="w-50 mx-auto"> -->
+      <ul class="w3-ul w3-card-4 w-50 mx-auto" style="margin-bottom: 10px;">
+
         <li class="w3-bar">
             {% if item.id in FriendRequestList %}
               <span onclick="" class="btn btn-light w3-right" style="margin-top: 15px;">Friend Request sent</span>
@@ -43,6 +47,7 @@
               <span>{% if item.hide_email %}*************{% else %}{{item.email}}{% endif %}</span>
             </div>
         </li>
+      </ul>
       <!-- </div> -->
       <!-- </a> -->
       {% endfor %}
@@ -65,7 +70,7 @@
         </div>
       </li> -->
 
-    </ul>
+    <!-- </ul> -->
   </div>
 
   <script>

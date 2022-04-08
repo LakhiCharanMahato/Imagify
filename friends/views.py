@@ -50,12 +50,20 @@ def friend_request_received_view(request):
     query_dict=request.GET
     if request.method=='GET':
         query=query_dict.get('acceptrequest')
-        print("LakhiOK",query,type(query))
+        # print("LakhiOK",query,type(query))
+        query1=query_dict.get('deleterequest')
         if query:
             user1=User.objects.get(id=int(query))
             friendsalready=FriendList.objects.filter(user1=user1).filter(user2=current_user).filter(is_active=False).exists()
             if not friendsalready:    
                 FriendList.accept_friend_request(user1,request.user)
+
+        if query1:
+            user1=User.objects.get(id=int(query1))
+            friendsalready=FriendList.objects.filter(user1=user1).filter(user2=current_user).filter(is_active=False).exists()
+            friendrequestexists=FriendList.objects.filter(user1=user1).filter(user2=current_user).filter(is_active=True).exists()
+            if not friendsalready and friendrequestexists:
+                FriendList.delete_friend_request(user1,request.user)            
 
 
     obj1=FriendList.objects.filter(user2=current_user).filter(is_active=True).values_list('user1',flat=True)

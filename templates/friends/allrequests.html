@@ -8,13 +8,17 @@
 <h1 style="text-align: center;margin-bottom: 30px;margin-top: 20px;">Friend Requests</h1>
 
 <div class="w3-container">
-    <ul class="w3-ul w3-card-4 w-50 mx-auto">
+    <!-- <ul class="w3-ul w3-card-4 w-50 mx-auto"> -->
         {% for item in obj %}
+        <ul class="w3-ul w3-card-4 w-50 mx-auto" style="margin-bottom: 10px;">
+
           <li class="w3-bar">
               <!-- {% if item.id in FriendRequestList %}
                 <span onclick="" class="btn btn-light w3-right" style="margin-top: 15px;">Friend Request sent</span>
               {% else %} -->
+                <a href="?deleterequest={{item.id}}">
                 <span onclick="this.parentElement.style.display='none'" class="btn btn-danger w3-right" style="margin-top: 15px;">Reject</span>
+                </a>
                 <a href="?acceptrequest={{item.id}}">
                   <span onclick="" class="btn btn-primary active w3-right" style="margin-right: 10px;margin-top: 15px ;">Accept</span>
                 </a>
@@ -28,8 +32,9 @@
                 <span>{% if item.hide_email %}*************{% else %}{{item.email}}{% endif %}</span>
               </div>
           </li>
+        </ul>
         {% endfor %}
-    </ul>
+    <!-- </ul> -->
   </div>
 
 {% endblock content %}
