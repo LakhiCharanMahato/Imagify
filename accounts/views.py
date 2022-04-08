@@ -19,6 +19,7 @@ from django.conf import settings
 from .tasks import send_verification_emailid
 
 from django.contrib.auth.tokens import default_token_generator
+from friends.models import FriendList
 
 # Create your views here.
 # class EmailThread(threading.Thread):
@@ -209,8 +210,31 @@ def account_view(request,*args,**kwargs):
         elif not user.is_authenticated:
             is_self=False
 
+        is_friend=FriendList.objects\
+            .filter(user1=request.user)\
+            .filter(user2=account)\
+            .filter(is_active=False)\
+            .exists()
+
+        friend_request_sent=FriendList.objects\
+            .filter(user1=request.user)\
+            .filter(user2=account)\
+            .filter(is_active=True)\
+            .exists()    
+
+        friend_request_received=FriendList.objects\
+            .filter(user2=request.user)\
+            .filter(user1=account)\
+            .filter(is_active=True)\
+            .exists() 
+        
+        print(is_friend,friend_request_sent,friend_request_received)
         context['is_self']=is_self
         context['is_friend']=is_friend
+        context['friend_request_sent']=friend_request_sent
+        context['friend_request_received']=friend_request_received
+
+
         # context['BASE_URL']=settings.BASE_URL
 
         return render(request,"accounts/profile.html",context)

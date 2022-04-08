@@ -33,7 +33,17 @@
     {% if is_self %}
     <a href="/profile/{{request.user.id}}/update"><button class="updbtn">Update</button></a>
     {% else %}
-    <button class="updbtn">Add Friend</button>
+        {% if is_friend %}
+            <button class="updbtn">Friends</button>
+        {% else %}
+            {% if friend_request_sent %}
+                <button class="updbtn">Request Sent</button>
+            {% elif friend_request_received %}
+                <button class="updbtn">Accept Request</button>
+            {% else %}
+                <button class="updbtn">Add Friend</button>
+            {% endif %}
+        {% endif %}
     {% endif %}
   </div>
 
