@@ -36,6 +36,16 @@ class FriendList(models.Model):
         entry1=FriendList.objects.filter(user1=user1).filter(user2=user2)[0]
         entry1.delete()
 
+    def unfriend_someone(user1,user2):
+        entry1=FriendList.objects.filter(user1=user1)\
+            .filter(user2=user2)\
+            .filter(is_active=False)[0]
+        entry1.delete()
+        entry2=FriendList.objects.filter(user1=user2)\
+            .filter(user2=user1)\
+            .filter(is_active=False)[0]
+        entry2.delete()     
+
 # def add_friend(self,account):
 # """
 # Add a new friend

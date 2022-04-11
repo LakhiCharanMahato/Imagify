@@ -80,6 +80,18 @@ def friend_request_received_view(request):
 
 def my_friends_all_view(request):
     current_user=request.user
+    query_dict=request.GET
+    if request.method=='GET':
+        query=query_dict.get('deletefriend')
+        if query:
+            user1=User.objects.get(id=int(query))
+            friendsalready=FriendList.objects.filter(user1=user1).filter(user2=current_user).filter(is_active=False).exists()
+            if friendsalready:    
+                FriendList.unfriend_someone(user1,request.user)
+
+
+
+
     obj1=FriendList.objects.filter(user1=current_user).filter(is_active=False).values_list('user2',flat=True)
     obj1=set(obj1)
 

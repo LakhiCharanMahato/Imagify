@@ -191,6 +191,40 @@ def account_view(request,*args,**kwargs):
                 0: THEM_SENT_TO_YOU
                 1: YOU_SENT_TO_THEM
     """
+    current_user=request.user
+    query_dict=request.GET
+    if request.method=='GET':
+        query=query_dict.get('deletefriend')
+        query1=query_dict.get('acceptrequest')
+        query2=query_dict.get('deleterequest')
+        query3=query_dict.get('initialreceiver')
+
+        if query:
+            user1=User.objects.get(id=int(query))
+            friendsalready=FriendList.objects.filter(user1=user1).filter(user2=current_user).filter(is_active=False).exists()
+            if friendsalready:    
+                FriendList.unfriend_someone(user1,request.user)
+
+        elif query1:
+            user1=User.objects.get(id=int(query1))
+            friendsalready=FriendList.objects.filter(user1=user1).filter(user2=current_user).filter(is_active=False).exists()
+            if not friendsalready:    
+                FriendList.accept_friend_request(user1,request.user)
+
+        elif query2:
+            user1=User.objects.get(id=int(query2))
+            friendsalready=FriendList.objects.filter(user1=user1).filter(user2=current_user).filter(is_active=False).exists()
+            friendrequestexists=FriendList.objects.filter(user1=user1).filter(user2=current_user).filter(is_active=True).exists()
+            if not friendsalready and friendrequestexists:
+                FriendList.delete_friend_request(user1,request.user) 
+
+        elif query3:
+            user2=User.objects.get(id=int(query3))
+            friendsalready=FriendList.objects.filter(user1=current_user).filter(user2=user2).exists()
+            if not friendsalready:    
+                FriendList.send_friend_request(request.user,user2)      
+
+
     context={}
     user_id=kwargs.get("user_id")
     try:

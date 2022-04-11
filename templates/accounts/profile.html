@@ -34,14 +34,23 @@
     <a href="/profile/{{request.user.id}}/update"><button class="updbtn">Update</button></a>
     {% else %}
         {% if is_friend %}
-            <button class="updbtn">Friends</button>
+        <a href="?deletefriend={{account.id}}">
+            <button class="updbtn">Unfriend</button>
+        </a>
         {% else %}
             {% if friend_request_sent %}
                 <button class="updbtn">Request Sent</button>
             {% elif friend_request_received %}
-                <button class="updbtn">Accept Request</button>
+            <a href="?acceptrequest={{account.id}}">
+                <button class="updbtn" style="margin-bottom: 1px;">Accept Request</button>
+            </a>
+            <a href="?deleterequest={{account.id}}">
+                <button class="updbtn" >Reject Request</button>
+            </a>
             {% else %}
+            <a href="?initialreceiver={{account.id}}">
                 <button class="updbtn">Add Friend</button>
+            </a>
             {% endif %}
         {% endif %}
     {% endif %}

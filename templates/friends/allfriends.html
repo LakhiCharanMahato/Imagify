@@ -26,7 +26,10 @@
                   <span onclick="" class="btn btn-primary active w3-right" style="margin-right: 10px;margin-top: 15px ;">Accept</span>
                 </a> -->
               <!-- {% endif %} -->
-              <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+              <a href="?deletefriend={{item.id}}">
+                <span onclick="this.parentElement.style.display='none'" class="btn btn-danger w3-right" style="margin-top: 15px;">Unfriend</span>
+              </a>
+              <!-- <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span> -->
 
   
               <a href="/profile/{{item.id}}/">
