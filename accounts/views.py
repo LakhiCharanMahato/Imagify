@@ -21,6 +21,8 @@ from .tasks import send_verification_emailid
 from django.contrib.auth.tokens import default_token_generator
 from friends.models import FriendList
 
+from django.core.paginator import Paginator
+
 # Create your views here.
 # class EmailThread(threading.Thread):
 #     def __init__(self,email):
@@ -267,6 +269,11 @@ def account_view(request,*args,**kwargs):
         context['is_friend']=is_friend
         context['friend_request_sent']=friend_request_sent
         context['friend_request_received']=friend_request_received
+
+
+        #############################################
+
+        ####################################################
 
 
         # context['BASE_URL']=settings.BASE_URL
