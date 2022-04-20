@@ -22,6 +22,7 @@ from django.contrib.auth.tokens import default_token_generator
 from friends.models import FriendList
 
 from django.core.paginator import Paginator
+from ladders.models import Ladder
 
 # Create your views here.
 # class EmailThread(threading.Thread):
@@ -271,7 +272,30 @@ def account_view(request,*args,**kwargs):
         context['friend_request_received']=friend_request_received
 
 
-        #############################################
+        ################# Showing Friend's Files ############################
+        if is_friend:
+            obj_list=Ladder.objects.filter(user_name=account)
+            paginator = Paginator(obj_list, 12) # Show 25 contacts per page.
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            print("Lakhi",page_obj.number,paginator.count,paginator)
+            pagescount_total=paginator.count // 12
+
+            if pagescount_total > 5:
+                empty_list_page=list(range(1,6))
+            else:
+                empty_list_page=list(range(1,pagescount_total+2))
+            
+            coun=pagescount_total+1     
+            context['empty_list_page']=empty_list_page 
+            context['coun']=coun   
+            context['page_obj']=page_obj   
+
+            noposts=False
+            if paginator.count!=0:
+                noposts=True
+            # print(noposts)
+            context['noposts']=noposts
 
         ####################################################
 

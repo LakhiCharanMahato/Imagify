@@ -3,13 +3,33 @@
 {% load static %}
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/accounts/profile.css' %}" />
+
+<link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/album/">
+<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+  
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+  
+
 {% endblock css %}
 
 {% block content %}
 <!-- <h2 style="text-align:center">User Profile Card</h2> -->
 
 <!-- Page Container -->
-{% if is_friend %}
+{% if is_friend  and noposts %}
 <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
     <!-- The Grid -->
     <div class="w3-row">
@@ -29,7 +49,93 @@
         </div>
 
         <div class="w3-col m9" style="padding-left: 2%;">
-            <h1>Hello I am Lakhi. Did you see the quick brown fox jump oo over the well</h1>
+            <div class="album py-5 bg-light ">
+                <div class="container">
+                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+            {% for obj in page_obj %}
+            <div class="col card-group">
+                <div class="card shadow-sm">
+                  {% if obj.content_type == "image/jpeg" or obj.content_type == "image/png" %}
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                      <title>Placeholder</title>
+                      <!-- <rect width="100%" height="100%" fill="#55595c"/> -->
+                      <!-- <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text> -->
+                      <image src="" alt="Girl in a jacket" width="100%" height="100%"  xlink:href="{{obj.file.url}}" >
+    
+                    </svg>
+                    {% else %}
+                    <video class="bd-placeholder-img card-img-top" width="100%" height="225" poster="{{obj.get_thumbnail}}" controls>
+                      <source src="{{obj.file.url}}" type="video/mp4">
+                    </video>
+                    {% endif %}
+                  <div class="card-body">
+                    <h5 class="card-title">{{obj.title}}</h5>
+                    <p class="card-text">{{obj.description}}</p>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center card-footer">
+                    <div class="btn-group">
+                      <a href="/gallery/{{obj.id}}/">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                      </a>
+                      <a href="/gallery/{{obj.id}}/edit/">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                      </a>
+                    </div>
+                    <small class="text-muted">{{obj.created_at}}</small>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}    
+            </div>
+            </div>
+            </div>
+            
+
+            <div class="d-flex justify-content-center" style="margin-bottom: 30px;margin-top: 20px;">
+                <nav aria-label="...">
+                  <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                      <!-- <span class="page-link">Previous</span> -->
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number}}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    {% else%}
+                    <li class="page-item disabled">
+                      <!-- <span class="page-link">Previous</span> -->
+                      <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    {% endif %}
+                
+                    {% for i in empty_list_page %}
+                    <li class="page-item {% if i == page_obj.number%} active {% endif%}" id="pt{{i}}">
+                      <!-- <span class="page-link" id="page{{i}}"></span> -->
+                      <a class="page-link" href="?page={{i}}" id="page{{i}}"></a>
+                    </li>    
+                    {% endfor %}
+                
+                
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>    
+                    {% endif %}
+                  </ul>
+                </nav>
+                </div>
+            <!-- <h1>Hello I am Lakhi. Did you see the quick brown fox jump oo over the well</h1> -->
         </div>
     </div>
 </div>
@@ -84,5 +190,24 @@
   </div>
 {% endif %}
 
+
+<script>
+      var m="{{ page_obj.number}}"
+  var countpage=parseInt('{{coun}}')
+  // console.log(countpage,m)
+  var iter=countpage > 5 ? 5 : countpage
+  for(j=0;j<iter;j++){
+    var p
+    if(iter<5){
+      p=j+1
+    }
+    else{
+    p=parseInt(m)+j
+    }
+    k=j+1
+    document.getElementById(`page${k}`).innerHTML=p
+    document.getElementById(`page${k}`).href=`?page=${p}`
+  }
+</script>
 
 {% endblock %}
