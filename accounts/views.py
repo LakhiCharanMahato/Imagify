@@ -329,3 +329,14 @@ def update_profile_view(request,*args,**kwargs):
 
         context['message']='Data saved.'
     return render(request,'accounts/profileupdate.html',context)
+
+# @login_required
+def friends_detail_view(request,user_id=None,id=None):
+    # gallery_obj=None
+    # if id is not None:
+    #     gallery_obj=Ladder.objects.filter(user_name=request.user).get(id=id)
+    gallery_obj=get_object_or_404(Ladder,id=id,user_name=user_id)
+    context={
+        "obj":gallery_obj
+    }
+    return render(request,'ladders/detail.html',context)

@@ -29,7 +29,8 @@ from accounts.views import (
     verification_success_view,
     password_reset_view,
     account_view,
-    update_profile_view
+    update_profile_view,
+    friends_detail_view
 )
 from ladders.views import (
     upload_view,
@@ -80,7 +81,8 @@ urlpatterns = [
 
     path('friends/people',friends_finder_view),
     path('friends/requests',friend_request_received_view),
-    path('friends/all',my_friends_all_view)
+    path('friends/all',my_friends_all_view),
+    path('friends/<user_id>/<int:id>/',friends_detail_view)
 
 ]
 
